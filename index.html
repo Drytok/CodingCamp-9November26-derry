@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expense &amp; Budget Visualizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+
+    <header class="app-header">
+      <h1>Expense &amp; Budget Visualizer</h1>
+      <button id="theme-toggle" class="btn btn-ghost" type="button" aria-label="Switch to dark mode">Dark mode</button>
+    </header>
+
+    <!-- Total Balance + Spending Limit -->
+    <section class="card balance-card" id="balance-card" aria-labelledby="balance-label">
+      <p class="balance-label" id="balance-label">Total balance</p>
+      <p class="balance-amount" id="balance-amount" aria-live="polite">$0.00</p>
+
+      <div class="limit-row">
+        <label for="limit-input">Spending limit</label>
+        <input type="number" id="limit-input" min="0" step="0.01" placeholder="No limit">
+      </div>
+      <div class="limit-meter" id="limit-meter" hidden>
+        <div class="limit-meter-fill" id="limit-fill"></div>
+      </div>
+      <p class="limit-message" id="limit-message" aria-live="polite"></p>
+    </section>
+
+    <!-- Input Form -->
+    <section class="card" aria-labelledby="form-title">
+      <h2 id="form-title">Add transaction</h2>
+      <form id="transaction-form" novalidate>
+        <div class="field">
+          <label for="item-name">Item name</label>
+          <input type="text" id="item-name" placeholder="e.g. Lunch" maxlength="60" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label for="item-amount">Amount</label>
+          <input type="number" id="item-amount" placeholder="0.00" min="0" step="0.01" inputmode="decimal">
+        </div>
+
+        <div class="field">
+          <label for="item-category">Category</label>
+          <select id="item-category"></select>
+        </div>
+
+        <div class="field">
+          <label for="new-category">Need another category?</label>
+          <div class="inline-row">
+            <input type="text" id="new-category" placeholder="e.g. Health" maxlength="20" autocomplete="off">
+            <button type="button" id="add-category" class="btn btn-ghost">Add category</button>
+          </div>
+        </div>
+
+        <p class="form-error" id="form-error" role="alert"></p>
+        <button type="submit" class="btn btn-primary">Add transaction</button>
+      </form>
+    </section>
+
+    <!-- Transaction List + Chart -->
+    <div class="grid">
+      <section class="card" aria-labelledby="list-title">
+        <div class="card-head">
+          <h2 id="list-title">Transactions</h2>
+          <div class="sort">
+            <label for="sort-select">Sort by</label>
+            <select id="sort-select">
+              <option value="newest">Newest first</option>
+              <option value="amount-desc">Amount: high to low</option>
+              <option value="amount-asc">Amount: low to high</option>
+              <option value="category">Category</option>
+            </select>
+          </div>
+        </div>
+
+        <ul class="transaction-list" id="transaction-list"></ul>
+        <p class="empty" id="list-empty">No transactions yet. Add your first one above.</p>
+      </section>
+
+      <section class="card" aria-labelledby="chart-title">
+        <h2 id="chart-title">Spending by category</h2>
+        <div class="chart-wrap">
+          <canvas id="category-chart" aria-label="Pie chart of spending by category" role="img"></canvas>
+        </div>
+        <p class="empty" id="chart-empty">The chart appears once you add a transaction.</p>
+      </section>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
